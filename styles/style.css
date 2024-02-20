@@ -1,0 +1,52 @@
+#MainWindow {
+    background-color: #202020;
+}
+
+#menubar {
+    background-color: #202020;
+    color: white;
+    font-family: system-ui;
+}
+
+#menubar::Item {
+    background-color: #252525;
+    color: white;
+}
+
+#menuSettings {
+    background-color: rgb(65, 65, 65);
+    border-radius: 10px;
+}
+#menuOutput_Path {
+    background-color: rgb(77, 77, 77);
+}
+
+#label_title {
+    font-size: 25px;
+    color: gray;
+}
+
+#dragAndDrop {
+    font-size: 15px;
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+#dragAndDrop:hover {
+    color: yellow;
+    border-color: yellow;
+}
+
+#btn_convert {
+    background-color: transparent;
+    color: white;
+    border: 2px ridge white;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+#btn_convert:hover {
+    color: #0f0;
+    border: 2px ridge #0f0;
+}
