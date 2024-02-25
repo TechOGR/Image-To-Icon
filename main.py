@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (
     QMainWindow,
     QFrame,
     QGridLayout,
-    QWidget
+    QWidget,
 )
 from modules.Convertir import convert_to_icon
 from PyQt5.QtCore import (
@@ -11,12 +11,15 @@ from PyQt5.QtCore import (
     Qt
 )
 from PyQt5.QtGui import (
-    QPixmap,
     QIcon,
+    QPainter,
+    QRegion,
+    QPainterPath
 )
 from PyQt5.uic import loadUi
 from os import (
-    getcwd 
+    getcwd,
+    environ
 )
 from os.path import (
     join,
@@ -86,6 +89,16 @@ class Main(QMainWindow):
             elif childItmem.objectName() == "SelectLocation":
                 childItmem.setIcon(setPathIco)
 
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        path = QPainterPath()
+        path.addRoundedRect(0, 0, self.width(), self.height(), 10, 10)
+
+        region = QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
+
     def styleElements(self):
         try:
             file = QFile(join(self.rootPath, "styles", "style.css"))
@@ -123,6 +136,15 @@ class Main(QMainWindow):
 
     def sameLocation(self):
         print("Hola Mundo")
+        variable = environ.get("ItI-Config")
+        print(variable)
+        if variable == None:
+            print("No se ha creado la variable... Crando....")
+            environ.setdefault("ItI-Config", "Hola Mundo")
+        else:
+            print("Obteniendo Valor de variable")
+            variable = environ.get("ItI-Config")
+            
     
     def selectLocation(self):
         print("Localizando")
