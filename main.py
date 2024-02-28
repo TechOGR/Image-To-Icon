@@ -1,11 +1,15 @@
+import subprocess as sp
+import sys
+from threading import Thread
+
 from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
     QFrame,
     QGridLayout,
-    QWidget,
+    QWidget
 )
-from modules.Convertir import convert_to_icon
+
 from PyQt5.QtCore import (
     QFile,
     Qt
@@ -17,18 +21,20 @@ from PyQt5.QtGui import (
     QPainterPath
 )
 from PyQt5.uic import loadUi
+
 from os import (
     getcwd,
     environ
 )
 from os.path import (
     join,
-    dirname
+    dirname,
+    basename
 )
-
 from widgets.dragAndDrop import ImageDropWidget
-
-import sys
+from modules.Convertir import convert_to_icon
+from modules.Msg_Emergentes import Messagge
+from modules.SelectLocation import DialogFile
 
 class Main(QMainWindow):
     
@@ -127,27 +133,45 @@ class Main(QMainWindow):
     def Convertir(self):
         print("Convirtiendo")
         
-        urlFIle = self.widgetDrag.getUrlFile()
-        
-        path_out = "D:/salida.ico"
-        print(dirname(urlFIle))
+        valueVariable = environ.get("IMGICON")
+        print(valueVariable)
+        if valueVariable == "set":
+            urlFIle = self.widgetDrag.getUrlFile()
 
-        convert_to_icon(urlFIle, path_out)
+            pathFile = f"{dirname(urlFIle)}"
+            nameFile = basename(urlFIle)
+            convert_to_icon(pathFile, nameFile)
+            
+        print(dirname(self.widgetDrag.getUrlFile()))
 
     def sameLocation(self):
-        print("Hola Mundo")
-        variable = environ.get("ItI-Config")
-        print(variable)
-        if variable == None:
-            print("No se ha creado la variable... Crando....")
-            environ.setdefault("ItI-Config", "Hola Mundo")
+        print("Setting same location")
+        
+        dataVariable = environ.get("IMGICON")
+        
+        if dataVariable == None:
+            print("Creando variable")
+            sp.run(["cmd.exe", "/c", "setx", "IMGICON", "set"],capture_output=True)
+        elif dataVariable == "set":
+            msg = Messagge("Ya se estableció la configuración")
+            msg.__init__("Ya se estableció la configuración")
+            msg.show()
+            print("Ya se estableció la configuración")
         else:
-            print("Obteniendo Valor de variable")
-            variable = environ.get("ItI-Config")
-            
+            msg = Messagge("Hay Otra configuración Puesta")
+            msg.show()
     
     def selectLocation(self):
-        print("Localizando")
+        
+        dialogFolder = DialogFile(self)
+        if dialogFolder.exec_():
+            directorio = dialogFolder.selectedFiles()[0]
+            print(directorio)
+            self.hilo = Thread(target=self.setEnvironValue,args=[directorio])
+            self.hilo.start()
+    def setEnvironValue(self, dirs):
+        sp.run(["cmd.exe", "/c", "setx", "IMGICON", dirs])
+        self.hilo._stop()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

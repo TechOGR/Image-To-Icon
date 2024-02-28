@@ -1,17 +1,28 @@
 from PIL import Image
 from os.path import (
-    basename
+    join
 )
 
-def convert_to_icon(path_image, path_out, size=(256,256)):
+def convert_to_icon(path_image, name_file, size=(256,256)):
     
-    nameFile = basename(path_image)
+    pathFile = path_image
+    nameFile = name_file
     
     if (nameFile.endswith(".png")):
-        convertPNG(path_image, path_out)
-    elif (nameFile.endswith(".jpg") or nameFile.endswith(".jpeg")):
-        convertJPG(path_image, path_out, size)
-    
+        path_out = join(pathFile, name_file.replace("png", "ico"))
+        convertPNG(join(pathFile, nameFile), path_out)
+    elif (nameFile.endswith(".jpg")):
+        path_out = join(pathFile, name_file.replace("jpg", "ico"))
+        convertJPG(join(pathFile, nameFile), path_out, size)
+    elif (nameFile.endswith("jpeg")):
+        path_out = join(pathFile, name_file.replace("jpeg", "ico"))
+        convertJPG(join(pathFile, nameFile), path_out, size)
+    else:
+        print("Formato no soportado")
+
+def getValueEnviron():
+    ...
+        
 def convertPNG(path, path_out, size=(90,90)):
     img = Image.open(path)
     img.save(path_out, sizes=[size])
