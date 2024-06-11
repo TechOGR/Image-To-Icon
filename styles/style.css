@@ -14,11 +14,27 @@
 }
 
 #menuSettings {
-    background-color: rgb(65, 65, 65);
-    border-radius: 10px;
+    background-color: rgb(40, 40, 40);
 }
+
+#menuSettings::Item {
+    background-color: rgb(65, 65, 65);
+}
+
 #menuOutput_Path {
-    background-color: rgb(77, 77, 77);
+    background-color: rgb(40, 40, 40);
+}
+
+#menuOutput_Path::Item {
+    background-color: rgb(65, 65, 65);
+}
+
+#menuContact {
+    background-color: rgb(40, 40, 40);
+}
+
+#menuContact::Item {
+    background-color: rgb(65, 65, 65);
 }
 
 #label_title {

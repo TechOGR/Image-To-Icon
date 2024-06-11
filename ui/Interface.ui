@@ -87,6 +87,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -172,7 +175,13 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
+   </property>
    <widget class="QMenu" name="menuSettings">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="title">
      <string>Settings</string>
     </property>
@@ -187,13 +196,28 @@
     <addaction name="menuOutput_Path"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuAbout_Me">
-    <property name="title">
-     <string>About Me</string>
+   <widget class="QMenu" name="menuContact">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="title">
+     <string>Contact</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
+    </property>
+    <addaction name="actionYouTube"/>
+    <addaction name="separator"/>
+    <addaction name="actionGitHub"/>
+    <addaction name="separator"/>
+    <addaction name="actionFacebook"/>
+    <addaction name="separator"/>
+    <addaction name="actionInstagram"/>
+    <addaction name="separator"/>
+    <addaction name="actionTelegram"/>
    </widget>
    <addaction name="menuSettings"/>
-   <addaction name="menuAbout_Me"/>
+   <addaction name="menuContact"/>
   </widget>
   <action name="SameLocation">
    <property name="text">
@@ -203,6 +227,31 @@
   <action name="SelectLocation">
    <property name="text">
     <string>Select Location</string>
+   </property>
+  </action>
+  <action name="actionYouTube">
+   <property name="text">
+    <string>YouTube</string>
+   </property>
+  </action>
+  <action name="actionGitHub">
+   <property name="text">
+    <string>GitHub</string>
+   </property>
+  </action>
+  <action name="actionFacebook">
+   <property name="text">
+    <string>Facebook</string>
+   </property>
+  </action>
+  <action name="actionInstagram">
+   <property name="text">
+    <string>Instagram</string>
+   </property>
+  </action>
+  <action name="actionTelegram">
+   <property name="text">
+    <string>Telegram</string>
    </property>
   </action>
  </widget>

@@ -35,6 +35,18 @@ from widgets.dragAndDrop import ImageDropWidget
 from modules.Convertir import convert_to_icon
 from modules.Msg_Emergentes import Messagge
 from modules.SelectLocation import DialogFile
+from modules.openSocialLinks import (
+    openTelegram,
+    openFacebook,
+    openGitHub,
+    openInstagram,
+    openYoutube
+)
+from modules.ModuleEnviron import (
+    createEnviron,
+    setCurrentEnviron,
+    getValueEnviron
+)
 
 class Main(QMainWindow):
     
@@ -50,11 +62,25 @@ class Main(QMainWindow):
     def initComponents(self):
         self.styleElements()
         
+        if getValueEnviron() == "%IMGICON%":
+            print("No se ha creado ninguna, Creando....")
+            createEnviron()
+        else:
+            self.dataEnviron = getValueEnviron()
+            print(self.dataEnviron)
+        
         self.SameLocation.triggered.connect(self.sameLocation)
         self.SelectLocation.triggered.connect(self.selectLocation)
         self.btn_convert.clicked.connect(self.Convertir)
         
+        self.actionYouTube.triggered.connect(openYoutube)
+        self.actionGitHub.triggered.connect(openGitHub)
+        self.actionFacebook.triggered.connect(openFacebook)
+        self.actionInstagram.triggered.connect(openInstagram)
+        self.actionTelegram.triggered.connect(openTelegram)
+        
         self.widgetDrag = ImageDropWidget()
+        
         frame = self.findChild(QFrame, "frame_3")
         splitleft = QWidget()
         splitright = QWidget()
@@ -95,6 +121,7 @@ class Main(QMainWindow):
             elif childItmem.objectName() == "SelectLocation":
                 childItmem.setIcon(setPathIco)
 
+        self.actionYouTube.setIcon(self.appIcon)
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
@@ -159,6 +186,7 @@ class Main(QMainWindow):
             print("Ya se estableció la configuración")
         else:
             msg = Messagge("Hay Otra configuración Puesta")
+            msg.__init__("Hay Otra configuración Puesta")
             msg.show()
     
     def selectLocation(self):
